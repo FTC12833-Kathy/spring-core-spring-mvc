@@ -1,6 +1,7 @@
 package guru.springframework.services;
 
 import guru.springframework.config.JpaIntegrationConfig;
+import guru.springframework.domain.Address;
 import guru.springframework.domain.Customer;
 import guru.springframework.domain.User;
 import org.junit.Test;
@@ -47,11 +48,12 @@ public class CustomerServiceJpaDaoImplTest {
         cust.setLastName("Jetson");
         cust.setEmail("GeorgeJane@gmail.com");
         cust.setPhoneNumber("123-123-1234");
-        cust.setAddressLine1("607 Milky Way");
-        cust.setAddressLine2("");
-        cust.setCity("Spaceville");
-        cust.setState("ZZ");
-        cust.setZipCode("99999");
+        cust.setBillingAddress(new Address());
+        cust.getBillingAddress().setAddressLine1("607 Milky Way");
+        cust.getBillingAddress().setAddressLine2("");
+        cust.getBillingAddress().setCity("Spaceville");
+        cust.getBillingAddress().setState("ZZ");
+        cust.getBillingAddress().setZipCode("99999");
 
         Customer newCust = customerService.saveOrUpdate(cust);
 

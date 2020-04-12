@@ -1,5 +1,6 @@
 package guru.springframework.bootstrap;
 
+import guru.springframework.domain.Address;
 import guru.springframework.domain.Customer;
 import guru.springframework.domain.Product;
 import guru.springframework.services.CustomerService;
@@ -39,11 +40,12 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         cust.setLastName("Flintstone");
         cust.setEmail("none");
         cust.setPhoneNumber("Just holler");
-        cust.setAddressLine1("111 Stoney Way");
-        cust.setAddressLine2("");
-        cust.setCity("Bedrock");
-        cust.setState("NY");
-        cust.setZipCode("12345");
+        cust.setBillingAddress(new Address());
+        cust.getBillingAddress().setAddressLine1("111 Stoney Way");
+        cust.getBillingAddress().setAddressLine2("");
+        cust.getBillingAddress().setCity("Bedrock");
+        cust.getBillingAddress().setState("NY");
+        cust.getBillingAddress().setZipCode("12345");
         customerService.saveOrUpdate(cust);
 
         cust = new Customer();
@@ -51,11 +53,12 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         cust.setLastName("Rubble");
         cust.setEmail("haha");
         cust.setPhoneNumber("Just yell");
-        cust.setAddressLine1("114 Stoney Way");
-        cust.setAddressLine2("");
-        cust.setCity("Bedrock");
-        cust.setState("NY");
-        cust.setZipCode("12345");
+        cust.setBillingAddress(new Address());
+        cust.getBillingAddress().setAddressLine1("114 Stoney Way");
+        cust.getBillingAddress().setAddressLine2("");
+        cust.getBillingAddress().setCity("Bedrock");
+        cust.getBillingAddress().setState("NY");
+        cust.getBillingAddress().setZipCode("12345");
         customerService.saveOrUpdate(cust);
 
         cust = new Customer();
@@ -63,23 +66,25 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         cust.setLastName("Munster");
         cust.setEmail("franknstein@gmail.com");
         cust.setPhoneNumber("555-5555");
-        cust.setAddressLine1("1313 Mockingbird Lane");
-        cust.setAddressLine2("");
-        cust.setCity("Mockingbird Heights");
-        cust.setState("CA");
-        cust.setZipCode("90120");
+        cust.setBillingAddress(new Address());
+        cust.getBillingAddress().setAddressLine1("1313 Mockingbird Lane");
+        cust.getBillingAddress().setAddressLine2("");
+        cust.getBillingAddress().setCity("Mockingbird Heights");
+        cust.getBillingAddress().setState("CA");
+        cust.getBillingAddress().setZipCode("90120");
         customerService.saveOrUpdate(cust);
 
         cust = new Customer();
         cust.setFirstName("Mike");
         cust.setLastName("Brady");
-        cust.setEmail("franknstein@gmail.com");
+        cust.setEmail("mbrady@gmail.com");
         cust.setPhoneNumber("762-0799");
-        cust.setAddressLine1("4222 Clinton Way");
-        cust.setAddressLine2("");
-        cust.setCity("Studio City");
-        cust.setState("CA");
-        cust.setZipCode("90120");
+        cust.setBillingAddress(new Address());
+        cust.getBillingAddress().setAddressLine1("4222 Clinton Way");
+        cust.getBillingAddress().setAddressLine2("");
+        cust.getBillingAddress().setCity("Studio City");
+        cust.getBillingAddress().setState("CA");
+        cust.getBillingAddress().setZipCode("90120");
         customerService.saveOrUpdate(cust);
     }
 
