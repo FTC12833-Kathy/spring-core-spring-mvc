@@ -2,6 +2,7 @@ package guru.springframework.services;
 
 import guru.springframework.config.JpaIntegrationConfig;
 import guru.springframework.domain.Customer;
+import guru.springframework.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(JpaIntegrationConfig.class)
@@ -74,5 +76,18 @@ public class CustomerServiceJpaDaoImplTest {
         customerService.delete(id);
 
         assertEquals(null, customerService.getById(id));
+    }
+
+    @Test
+    public void testSaveWithUser() throws Exception {
+        Customer customer = new Customer();
+        User user = new User();
+        user.setUsername("user name");
+        user.setPassword("awesomePassword");
+        customer.setUser(user);
+
+        Customer savedCustomer = customerService.saveOrUpdate(customer);
+
+        assertNotEquals(null, savedCustomer.getUser().getId());
     }
 }
