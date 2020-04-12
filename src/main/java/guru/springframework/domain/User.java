@@ -20,6 +20,30 @@ public class User implements DomainObject {
     private String encryptedPassword;
     private Boolean enabled = true;
 
+    // if we delete a user, the customer will not get deleted with it
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Customer customer;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        customer.setUser(this);  // bidirectional relationship
+    }
+
     @Override
     public Integer getId() {
         return id;
