@@ -1,6 +1,6 @@
 package guru.springframework.services.mapservices;
 
-import guru.springframework.domain.DomainObject;
+import guru.springframework.domain.AbstractDomain;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
 import org.springframework.context.annotation.Profile;
@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductServiceImpl extends AbstractMapService implements ProductService {
 
     @Override
-    public List<DomainObject> listAll() {
+    public List<AbstractDomain> listAll() {
         return super.listAll();
     }
 

@@ -1,6 +1,6 @@
 package guru.springframework.services.mapservices;
 
-import guru.springframework.domain.DomainObject;
+import guru.springframework.domain.AbstractDomain;
 import guru.springframework.domain.User;
 import guru.springframework.services.CRUDService;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("map")
 public class UserServiceMapImpl extends AbstractMapService implements CRUDService<User> {
     @Override
-    public List<DomainObject> listAll() {
+    public List<AbstractDomain> listAll() {
         return super.listAll();
     }
 
