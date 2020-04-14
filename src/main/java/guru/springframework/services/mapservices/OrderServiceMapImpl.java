@@ -1,38 +1,36 @@
 package guru.springframework.services.mapservices;
 
 import guru.springframework.domain.DomainObject;
-import guru.springframework.domain.Product;
-import guru.springframework.services.ProductService;
+import guru.springframework.domain.Order;
+import guru.springframework.services.OrderService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by jt on 11/6/15.
+ * Created by jt on 12/16/15.
  */
 @Service
 @Profile("map")
-public class ProductServiceImpl extends AbstractMapService implements ProductService {
-
+public class OrderServiceMapImpl extends AbstractMapService implements OrderService {
     @Override
     public List<DomainObject> listAll() {
         return super.listAll();
     }
 
     @Override
-    public Product getById(Integer id) {
-        return (Product) super.getById(id);
+    public Order getById(Integer id) {
+        return (Order) super.getById(id);
     }
 
     @Override
-    public Product saveOrUpdate(Product domainObject) {
-        return (Product) super.saveOrUpdate(domainObject);
+    public Order saveOrUpdate(Order domainObject) {
+        return (Order) super.saveOrUpdate(domainObject);
     }
 
     @Override
     public void delete(Integer id) {
         super.delete(id);
     }
-
-   }
+}

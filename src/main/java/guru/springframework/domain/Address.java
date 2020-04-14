@@ -2,6 +2,9 @@ package guru.springframework.domain;
 
 import javax.persistence.Embeddable;
 
+/**
+ * Created by jt on 12/15/15.
+ */
 @Embeddable
 public class Address {
 

@@ -1,13 +1,13 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
  * Created by jt on 11/6/15.
  */
 @Entity
-public class Product extends AbstractDomain {
+public class Product extends AbstractDomainClass {
 
     private String description;
     private BigDecimal price;
@@ -36,4 +36,5 @@ public class Product extends AbstractDomain {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }

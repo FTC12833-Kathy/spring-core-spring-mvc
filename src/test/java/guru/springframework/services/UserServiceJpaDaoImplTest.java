@@ -2,7 +2,6 @@ package guru.springframework.services;
 
 import guru.springframework.config.JpaIntegrationConfig;
 import guru.springframework.domain.*;
-import org.hibernate.mapping.IdentifierBag;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+/**
+ * Created by jt on 12/14/15.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(JpaIntegrationConfig.class)
-@ActiveProfiles({"jpadao"})
+@ActiveProfiles("jpadao")
 public class UserServiceJpaDaoImplTest {
+
     private UserService userService;
     private ProductService productService;
 
@@ -28,7 +28,7 @@ public class UserServiceJpaDaoImplTest {
     }
 
     @Autowired
-    public void setProductService(ProductService productService){
+    public void setProductService(ProductService productService) {
         this.productService = productService;
     }
 
@@ -41,37 +41,35 @@ public class UserServiceJpaDaoImplTest {
 
         User savedUser = userService.saveOrUpdate(user);
 
-        assertNotEquals(null, savedUser.getId());
-        assertNotEquals(null, savedUser.getEncryptedPassword());
+        assert savedUser.getId() != null;
+        assert savedUser.getEncryptedPassword() != null;
 
         System.out.println("Encrypted Password");
         System.out.println(savedUser.getEncryptedPassword());
+
     }
 
     @Test
     public void testSaveOfUserWithCustomer() throws Exception {
+
         User user = new User();
 
         user.setUsername("someusername");
         user.setPassword("myPassword");
 
         Customer customer = new Customer();
-        customer.setFirstName("Tom");
-        customer.setLastName("Petty");
-        user.setCustomer(customer); // this will also set user into customer record
+        customer.setFirstName("Chevy");
+        customer.setLastName("Chase");
 
-        User newUser = userService.saveOrUpdate(user);
+        user.setCustomer(customer);
 
-        System.out.println("user " + user.getId());
-        System.out.println("newUser " + newUser.getId());
+        User savedUser = userService.saveOrUpdate(user);
 
-        assertNotEquals(null, newUser.getId());
-        assertEquals("Tom", customer.getFirstName());
-        assertNotEquals(null, newUser.getVersion());
-        assertNotEquals(null, newUser.getCustomer());
-        assertNotEquals(null, customer.getUser());
-        assertEquals(user.getCustomer(), customer);
-//        assertEquals(customer.getUser(), newUser); // problem - customer has original user from before saveOrUpdate
+        assert savedUser.getId() != null;
+        assert savedUser.getVersion() != null;
+        assert savedUser.getCustomer() != null;
+        assert savedUser.getCustomer().getId() != null;
+
     }
 
     @Test
@@ -85,14 +83,14 @@ public class UserServiceJpaDaoImplTest {
 
         User savedUser = userService.saveOrUpdate(user);
 
-        assertNotEquals(null, savedUser.getId());
-        assertNotEquals(null, savedUser.getVersion());
-        assertNotEquals(null, savedUser.getCart());
-        assertNotEquals(null, savedUser.getCart().getId());
+        assert savedUser.getId() != null;
+        assert savedUser.getVersion() != null;
+        assert savedUser.getCart() != null;
+        assert savedUser.getCart().getId() != null;
     }
 
     @Test
-    public void testAddCartToUserWithDetails() throws Exception {
+    public void testAddCartToUserWithCartDetails() throws Exception {
         User user = new User();
 
         user.setUsername("someusername");
@@ -102,13 +100,13 @@ public class UserServiceJpaDaoImplTest {
 
         List<Product> storedProducts = (List<Product>) productService.listAll();
 
-        CartDetail item = new CartDetail();
-        item.setProduct(storedProducts.get(0));
-        user.getCart().addCartDetail(item);
+        CartDetail cartItemOne = new CartDetail();
+        cartItemOne.setProduct(storedProducts.get(0));
+        user.getCart().addCartDetail(cartItemOne);
 
-        item = new CartDetail();
-        item.setProduct(storedProducts.get(1));
-        user.getCart().addCartDetail(item);
+        CartDetail cartItemTwo = new CartDetail();
+        cartItemTwo.setProduct(storedProducts.get(1));
+        user.getCart().addCartDetail(cartItemTwo);
 
         User savedUser = userService.saveOrUpdate(user);
 
@@ -116,7 +114,7 @@ public class UserServiceJpaDaoImplTest {
         assert savedUser.getVersion() != null;
         assert savedUser.getCart() != null;
         assert savedUser.getCart().getId() != null;
-        assertEquals(2, savedUser.getCart().getCartDetails().size());
+        assert savedUser.getCart().getCartDetails().size() == 2;
     }
 
     @Test
@@ -130,21 +128,22 @@ public class UserServiceJpaDaoImplTest {
 
         List<Product> storedProducts = (List<Product>) productService.listAll();
 
-        CartDetail item = new CartDetail();
-        item.setProduct(storedProducts.get(0));
-        user.getCart().addCartDetail(item);
+        CartDetail cartItemOne = new CartDetail();
+        cartItemOne.setProduct(storedProducts.get(0));
+        user.getCart().addCartDetail(cartItemOne);
 
-        item = new CartDetail();
-        item.setProduct(storedProducts.get(1));
-        user.getCart().addCartDetail(item);
+        CartDetail cartItemTwo = new CartDetail();
+        cartItemTwo.setProduct(storedProducts.get(1));
+        user.getCart().addCartDetail(cartItemTwo);
 
         User savedUser = userService.saveOrUpdate(user);
 
-        assertEquals(2, savedUser.getCart().getCartDetails().size());
+        assert savedUser.getCart().getCartDetails().size() == 2;
 
-        savedUser.getCart().removeCartDetail(savedUser.getCart().getCartDetails().get(1));
+        savedUser.getCart().removeCartDetail(savedUser.getCart().getCartDetails().get(0));
+
         userService.saveOrUpdate(savedUser);
 
-        assertEquals(1, savedUser.getCart().getCartDetails().size());
+        assert savedUser.getCart().getCartDetails().size() == 1;
     }
 }

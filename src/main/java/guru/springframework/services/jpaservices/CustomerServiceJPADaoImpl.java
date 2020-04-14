@@ -1,7 +1,7 @@
 package guru.springframework.services.jpaservices;
 
-import guru.springframework.domain.User;
-import guru.springframework.services.UserService;
+import guru.springframework.domain.Customer;
+import guru.springframework.services.CustomerService;
 import guru.springframework.services.security.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service
 @Profile("jpadao")
-public class UserServiceJpaDaoImpl extends AbstractJpaDaoService implements UserService {
+public class CustomerServiceJPADaoImpl extends AbstractJpaDaoService implements CustomerService {
 
     private EncryptionService encryptionService;
 
@@ -25,33 +25,34 @@ public class UserServiceJpaDaoImpl extends AbstractJpaDaoService implements User
     }
 
     @Override
-    public List<?> listAll() {
+    public List<Customer> listAll() {
         EntityManager em = emf.createEntityManager();
 
-        return em.createQuery("from User", User.class).getResultList();
+        return em.createQuery("from Customer", Customer.class).getResultList();
     }
 
     @Override
-    public User getById(Integer id) {
+    public Customer getById(Integer id) {
         EntityManager em = emf.createEntityManager();
 
-        return em.find(User.class, id);
+        return em.find(Customer.class, id);
     }
 
     @Override
-    public User saveOrUpdate(User domainObject) {
+    public Customer saveOrUpdate(Customer domainObject) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
 
-        if(domainObject.getPassword() != null){
-            domainObject.setEncryptedPassword(encryptionService.encryptString(domainObject.getPassword()));
+        if (domainObject.getUser() != null && domainObject.getUser().getPassword() != null) {
+            domainObject.getUser().setEncryptedPassword(
+                    encryptionService.encryptString(domainObject.getUser().getPassword()));
         }
 
-        User saveduser = em.merge(domainObject);
+        Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
-        return saveduser;
+        return savedCustomer;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserServiceJpaDaoImpl extends AbstractJpaDaoService implements User
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.remove(em.find(User.class, id));
+        em.remove(em.find(Customer.class, id));
         em.getTransaction().commit();
     }
 }

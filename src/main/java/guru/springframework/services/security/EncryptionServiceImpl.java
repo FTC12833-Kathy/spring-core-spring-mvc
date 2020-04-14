@@ -4,6 +4,9 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Created by jt on 12/14/15.
+ */
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
 

@@ -1,33 +1,36 @@
 package guru.springframework.services.mapservices;
 
-import guru.springframework.domain.AbstractDomain;
+import guru.springframework.domain.DomainObject;
 
 import java.util.*;
 
+/**
+ * Created by jt on 11/14/15.
+ */
 public abstract class AbstractMapService  {
-    protected Map<Integer, AbstractDomain> domainMap;
+    protected Map<Integer, DomainObject> domainMap;
 
     public AbstractMapService() {
         domainMap = new HashMap<>();
     }
 
-    public List<AbstractDomain> listAll() {
+    public List<DomainObject> listAll() {
         return new ArrayList<>(domainMap.values());
     }
 
-    public AbstractDomain getById(Integer id) {
+    public DomainObject getById(Integer id) {
         return domainMap.get(id);
     }
 
-    public AbstractDomain saveOrUpdate(AbstractDomain abstractDomain) {
-        if (abstractDomain != null){
+    public DomainObject saveOrUpdate(DomainObject domainObject) {
+        if (domainObject != null){
 
-            if (abstractDomain.getId() == null){
-                abstractDomain.setId(getNextKey());
+            if (domainObject.getId() == null){
+                domainObject.setId(getNextKey());
             }
-            domainMap.put(abstractDomain.getId(), abstractDomain);
+            domainMap.put(domainObject.getId(), domainObject);
 
-            return abstractDomain;
+            return domainObject;
         } else {
             throw new RuntimeException("Object Can't be null");
         }
@@ -38,9 +41,7 @@ public abstract class AbstractMapService  {
     }
 
     private Integer getNextKey(){
-        if (domainMap.isEmpty())
-            return 1;
-
         return Collections.max(domainMap.keySet()) + 1;
     }
+
 }

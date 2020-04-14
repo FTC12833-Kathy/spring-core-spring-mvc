@@ -1,9 +1,15 @@
 package guru.springframework.domain;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
+/**
+ * Created by jt on 11/14/15.
+ */
 @Entity
-public class Customer extends AbstractDomain {
+public class Customer extends AbstractDomainClass {
 
     private String firstName;
     private String lastName;
@@ -16,8 +22,13 @@ public class Customer extends AbstractDomain {
     @Embedded
     private Address shippingAddress;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private User user;
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
