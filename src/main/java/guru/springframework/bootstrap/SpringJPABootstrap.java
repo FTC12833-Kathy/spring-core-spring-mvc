@@ -3,8 +3,10 @@ package guru.springframework.bootstrap;
 import guru.springframework.domain.Address;
 import guru.springframework.domain.Customer;
 import guru.springframework.domain.Product;
+import guru.springframework.domain.User;
 import guru.springframework.services.CustomerService;
 import guru.springframework.services.ProductService;
+import guru.springframework.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +19,7 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
     
     private ProductService productService;
     private CustomerService customerService;
+    private UserService userService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -28,10 +31,16 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         this.customerService = customerService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadProducts();
         loadCustomers();
+        loadUsers();
     }
 
     private void loadCustomers() {
@@ -90,7 +99,6 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
 
     public void loadProducts(){
         Product product = new Product();
-        
         product.setDescription("Product 1");
         product.setPrice(new BigDecimal("12.99"));
         product.setImageUrl("http://example.com/product1");
@@ -119,5 +127,19 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         product.setPrice(new BigDecimal("25.99"));
         product.setImageUrl("http://example.com/product5");
         productService.saveOrUpdate(product);
+    }
+
+    private void loadUsers() {
+        User user = new User();
+        user.setUsername("FrankNStein");
+        user.setPassword("Lilly");
+        user.setCustomer(customerService.getById(3));
+        userService.saveOrUpdate(user);
+
+        user = new User();
+        user.setUsername("FreddieF");
+        user.setPassword("Wilma");
+        user.setCustomer(customerService.getById(1));
+        userService.saveOrUpdate(user);
     }
 }

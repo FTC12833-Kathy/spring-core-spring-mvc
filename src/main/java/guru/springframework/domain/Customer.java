@@ -16,7 +16,7 @@ public class Customer extends AbstractDomain {
     @Embedded
     private Address shippingAddress;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private User user;
 
     public String getFirstName() {

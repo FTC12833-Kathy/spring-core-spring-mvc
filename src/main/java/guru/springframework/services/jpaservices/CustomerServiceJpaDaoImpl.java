@@ -36,16 +36,17 @@ public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements 
     }
 
     @Override
-    public Customer saveOrUpdate(Customer domainObject) {
+    public Customer saveOrUpdate(Customer inCustomer) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
 
-        if (domainObject.getUser() != null && domainObject.getUser().getPassword() != null) {
-            domainObject.getUser().setEncryptedPassword(
-                    encryptionService.encryptString(domainObject.getUser().getPassword()));
+        // encrypt password from inCustomer before merging to savedCustomer
+        if (inCustomer.getUser() != null && inCustomer.getUser().getPassword() != null) {
+            inCustomer.getUser().setEncryptedPassword(
+                    encryptionService.encryptString(inCustomer.getUser().getPassword()));
         }
-        Customer savedCustomer = em.merge(domainObject);
+        Customer savedCustomer = em.merge(inCustomer);
         em.getTransaction().commit();
 
         return savedCustomer;

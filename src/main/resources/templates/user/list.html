@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Core Online Tutorial - List Products</title>
+    <title>Spring Core Online Tutorial - List Customers</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -16,32 +16,32 @@
 </head>
 <body>
 <div class="container">
-    <div th:if="${not #lists.isEmpty(products)}">
-        <h2>Product List</h2>
+    <div th:if="${not #lists.isEmpty(users)}">
+        <h2>Customer List</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image URL</th>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Customer</th>
                 <th>Show</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
-            <tr th:each="product : ${products}">
-                <td th:text="${product.id}"></td>
-                <td th:text="${product.description}"></td>
-                <td th:text="${product.price}"></td>
-                <td th:text="${product.imageUrl}"></td>
-                <td><a th:href="${'/product/show/' + product.id}">View</a> </td>
-                <td><a th:href="${'/product/edit/' + product.id}">Edit</a> </td>
-                <td><a th:href="${'/product/delete/' + product.id}">Delete</a> </td>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td>********</td>
+                <td th:text="${user.customer.lastName}"></td>
+                <td><a th:href="${'/user/show/' + user.id}">View</a> </td>
+                <td><a th:href="${'/user/edit/' + user.id}">Edit</a> </td>
+                <td><a th:href="${'/user/delete/' + user.id}">Delete</a> </td>
             </tr>
         </table>
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <a href="/product/new">New Product</a>
+            <a href="/user/new">New User</a>
         </div>
     </div>
 </div>
