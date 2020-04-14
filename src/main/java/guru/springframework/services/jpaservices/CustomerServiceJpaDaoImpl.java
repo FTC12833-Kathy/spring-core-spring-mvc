@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * Created by jt on 12/14/15.
+ */
 @Service
 @Profile("jpadao")
 public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements CustomerService {
@@ -45,6 +48,7 @@ public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements 
             domainObject.getUser().setEncryptedPassword(
                     encryptionService.encryptString(domainObject.getUser().getPassword()));
         }
+
         Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
